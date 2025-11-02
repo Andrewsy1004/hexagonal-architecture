@@ -17,4 +17,4 @@ to manage users. It is a simple application that allows you to create, update, a
 ```bash
    npm run start:dev
 ```
-5. Open the application in your browser, access the URL `http://localhost:port/api/`, port specified in the '.env' file
+5. Open the application in your browser, access the URL `http://localhost:port/api#/`, port specified in the '.env' file

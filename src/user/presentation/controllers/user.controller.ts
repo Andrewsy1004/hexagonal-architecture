@@ -17,19 +17,14 @@ import {
   ApiBody 
 } from '@nestjs/swagger';
 
-import * as application from "../application";
-import { User } from "../domain";
-import { CreateUserDto, UpdateUserDto } from "../application/dto";
+import * as application from "../../application";
+import { User } from "../../domain";
+import { CreateUserDto, UpdateUserDto } from "../../application/dto";
+import { UserResponseMapper } from "../mappers";
+import { UserResponseDto } from "../dto";
 
 
-class UserResponseDto {
-  id: string;
-  name: string;
-  email: string;
-  createdAt: Date;
-  updatedAt: Date;
-  accountAge: number;
-}
+
 
 @ApiTags('users')
 @Controller('users')
@@ -38,7 +33,8 @@ export class UserController {
     private readonly createUserUseCase: application.CreateUserUseCase,
     private readonly listUsersUseCase: application.ListUsersUseCase,
     private readonly DeleteUserUseCase: application.DeleteUserUseCase,
-    private readonly updateUserUseCase: application.UpdateUserUseCase
+    private readonly updateUserUseCase: application.UpdateUserUseCase,
+    private readonly userMapper: UserResponseMapper,
   ) {}
 
   @Post()
@@ -83,7 +79,7 @@ export class UserController {
   })
   async createUser(@Body() request: CreateUserDto) {
     const user = await this.createUserUseCase.execute(request);
-    return this.mapUserToResponse(user);
+    return this.userMapper.toDto(user);
   }
   
   @Get()
@@ -116,7 +112,7 @@ export class UserController {
   })
   async listUsers() {
     const users = await this.listUsersUseCase.execute();
-    return users.map((user) => this.mapUserToResponse(user));
+     return this.userMapper.toDtoList(users); 
   }
   
   
@@ -146,18 +142,9 @@ export class UserController {
   })
   async updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
     const user = await this.updateUserUseCase.execute(id, body);
-    return this.mapUserToResponse(user);
+   return this.userMapper.toDto(user);
   }
 
   
-  private mapUserToResponse(user: User): UserResponseDto {
-    return {
-      id: user.getId().getValue(),
-      name: user.getName(),
-      email: user.getEmail().getValue(),
-      createdAt: user.getCreatedAt(),
-      updatedAt: user.getUpatedAt(),
-      accountAge: user.getAccountAge(),
-    };
-  }
+  
 }

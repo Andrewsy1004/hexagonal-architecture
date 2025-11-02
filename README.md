@@ -3,7 +3,7 @@
 </p>
 
 ## 📦 Description
-This project is a NestJS-based backend application that provides that uses hexagonal architecture.
+This project is a NestJS-based backend application that uses hexagonal architecture.
 to manage users. It is a simple application that allows you to create, update, and delete users.
 
 ## 🚀 Getting started

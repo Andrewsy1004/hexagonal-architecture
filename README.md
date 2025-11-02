@@ -12,7 +12,7 @@ to manage users. It is a simple application that allows you to create, update, a
 ```bash
    npm install
 ```
-3. Environment variables, change the `.env.example` file to `.env`, fill in the values that you need
+3. Environment variables, change the `.env.template` file to `.env`, fill in the values that you need
 4. Run the application
 ```bash
    npm run start:dev
